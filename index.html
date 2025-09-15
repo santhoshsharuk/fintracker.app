@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinTrack AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'gray-900': '#121212',
+              'gray-800': '#1E1E1E',
+              'gray-700': '#2A2A2A',
+              'gray-600': '#3C3C3C',
+              'gray-400': '#A0A0A0',
+              'gray-200': '#EAEAEA',
+              'primary': '#4F46E5',
+              'primary-hover': '#4338CA',
+              'secondary': '#10B981',
+              'accent-red': '#EF4444',
+              'accent-yellow': '#F59E0B',
+              'accent-blue': '#3B82F6',
+            }
+          }
+        }
+      }
+    </script>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.2.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/fintracker/assets/index-4p8oOzeN.js"></script>
+</head>
+  <body class="bg-gray-900 text-gray-200">
+    <div id="root"></div>
+  </body>
+</html>
