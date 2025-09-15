@@ -61,6 +61,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ categories, setCategories, 
                             <option value="EUR">EUR - Euro</option>
                             <option value="GBP">GBP - British Pound</option>
                             <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="INR">INR - Indian Rupee</option>
                         </select>
                     </div>
                     <div>
@@ -76,6 +77,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ categories, setCategories, 
                             <option value="en-GB">English (UK)</option>
                             <option value="de-DE">Deutsch</option>
                             <option value="ja-JP">日本語</option>
+                            <option value="en-IN">English (India)</option>
                         </select>
                     </div>
                 </div>
