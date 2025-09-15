@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Goal, Transaction, Settings } from '../types';
 import { PlusIcon } from './Icons';
-import { getFinancialTip } from '../services/geminiService';
 
 interface GoalsViewProps {
     goals: Goal[];
@@ -47,9 +46,6 @@ const AddGoalForm: React.FC<{ onAddGoal: (goal: Omit<Goal, 'id' | 'currentAmount
 };
 
 const GoalProgressCard: React.FC<{ goal: Goal; currentAmount: number; settings: Settings }> = ({ goal, currentAmount, settings }) => {
-    const [tip, setTip] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat(settings.language, {
             style: 'currency',
@@ -60,13 +56,6 @@ const GoalProgressCard: React.FC<{ goal: Goal; currentAmount: number; settings: 
     const progress = (currentAmount / goal.targetAmount) * 100;
     const daysLeft = Math.ceil((new Date(goal.deadline).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
 
-    const handleGetTip = async () => {
-        setIsLoading(true);
-        const fetchedTip = await getFinancialTip({...goal, currentAmount});
-        setTip(fetchedTip);
-        setIsLoading(false);
-    };
-
     return (
         <div className="bg-gray-800 p-6 rounded-lg">
             <div className="flex justify-between items-start mb-2">
@@ -74,7 +63,6 @@ const GoalProgressCard: React.FC<{ goal: Goal; currentAmount: number; settings: 
                     <h3 className="text-xl font-bold">{goal.name}</h3>
                     <p className="text-gray-400">{daysLeft > 0 ? `${daysLeft} days left` : 'Deadline passed'}</p>
                 </div>
-                <button onClick={handleGetTip} disabled={isLoading} className="text-primary hover:text-primary-hover font-semibold">Get AI Tip</button>
             </div>
             <div className="flex justify-between items-center text-lg mb-2">
                 <span className="font-semibold text-secondary">{formatCurrency(currentAmount)}</span>
@@ -83,8 +71,6 @@ const GoalProgressCard: React.FC<{ goal: Goal; currentAmount: number; settings: 
             <div className="w-full bg-gray-700 rounded-full h-3">
                 <div className="bg-secondary h-3 rounded-full" style={{ width: `${progress}%` }}></div>
             </div>
-            {isLoading && <p className="text-sm text-gray-400 mt-2 italic">Generating tip...</p>}
-            {tip && !isLoading && <p className="text-sm text-gray-300 mt-2 p-2 bg-gray-600 rounded-md">{tip}</p>}
         </div>
     );
 };

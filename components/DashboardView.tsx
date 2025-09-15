@@ -2,8 +2,6 @@ import React, { useMemo } from 'react';
 import { Transaction, Goal, BudgetRule, Category, Settings } from '../types';
 import ProgressRing from './ProgressRing';
 import { PlusIcon } from './Icons';
-// FIX: Imported getFinancialTip using ES module syntax to resolve 'require' is not defined error.
-import { getFinancialTip } from '../services/geminiService';
 
 interface DashboardViewProps {
     transactions: Transaction[];
@@ -128,10 +126,6 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
 };
 
 const GoalCard: React.FC<{ goal: Goal; settings: Settings; }> = ({ goal, settings }) => {
-    const [tip, setTip] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(false);
-    // FIX: Removed CommonJS 'require' statement. getFinancialTip is now imported at the top of the file.
-
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat(settings.language, {
             style: 'currency',
@@ -140,13 +134,6 @@ const GoalCard: React.FC<{ goal: Goal; settings: Settings; }> = ({ goal, setting
     };
     
     const progress = (goal.currentAmount / goal.targetAmount) * 100;
-
-    const handleGetTip = async () => {
-        setIsLoading(true);
-        const fetchedTip = await getFinancialTip(goal);
-        setTip(fetchedTip);
-        setIsLoading(false);
-    };
 
     return (
         <div className="bg-gray-700 p-4 rounded-lg">
@@ -157,19 +144,10 @@ const GoalCard: React.FC<{ goal: Goal; settings: Settings; }> = ({ goal, setting
                         {formatCurrency(goal.currentAmount)} / {formatCurrency(goal.targetAmount)}
                     </p>
                 </div>
-                <button 
-                    onClick={handleGetTip}
-                    disabled={isLoading}
-                    className="flex items-center space-x-1 text-sm text-primary hover:text-primary-hover disabled:opacity-50 transition-colors"
-                >
-                    <span className="font-bold">AI Tip</span>
-                </button>
             </div>
             <div className="w-full bg-gray-600 rounded-full h-2.5 mt-2">
                 <div className="bg-secondary h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
             </div>
-            {isLoading && <p className="text-sm text-gray-400 mt-2 italic">Generating tip...</p>}
-            {tip && !isLoading && <p className="text-sm text-gray-300 mt-2 p-2 bg-gray-600 rounded-md">{tip}</p>}
         </div>
     );
 };
