@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Transaction, Category, TransactionType } from '../types';
+import { ICON_MAP } from '../constants';
 
 interface AddTransactionModalProps {
     isOpen: boolean;
@@ -77,12 +77,15 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
                     <div className="mb-4">
                         <label className="block text-gray-400 mb-2">Category</label>
                         <div className="grid grid-cols-4 gap-2">
-                            {relevantCategories.map(cat => (
-                                <button type="button" key={cat.id} onClick={() => setCategoryId(cat.id)} className={`flex flex-col items-center p-2 rounded-lg border-2 ${categoryId === cat.id ? 'border-primary bg-primary/20' : 'border-transparent bg-gray-700 hover:bg-gray-600'}`}>
-                                    {cat.icon}
-                                    <span className="text-xs mt-1">{cat.name}</span>
-                                </button>
-                            ))}
+                            {relevantCategories.map(cat => {
+                                const IconComponent = ICON_MAP[cat.icon] || ICON_MAP['ShoppingIcon'];
+                                return (
+                                    <button type="button" key={cat.id} onClick={() => setCategoryId(cat.id)} className={`flex flex-col items-center p-2 rounded-lg border-2 ${categoryId === cat.id ? 'border-primary bg-primary/20' : 'border-transparent bg-gray-700 hover:bg-gray-600'}`}>
+                                        <IconComponent />
+                                        <span className="text-xs mt-1">{cat.name}</span>
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 

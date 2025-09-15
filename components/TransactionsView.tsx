@@ -1,7 +1,7 @@
-
 import React, { useMemo, useState } from 'react';
 import { Transaction, Category, Settings } from '../types';
 import { EditIcon, TrashIcon } from './Icons';
+import { ICON_MAP } from '../constants';
 
 interface TransactionsViewProps {
     transactions: Transaction[];
@@ -103,13 +103,14 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ transactions, categ
                     <tbody>
                         {filteredAndSortedTransactions.map(t => {
                              const category = categoryMap.get(t.categoryId);
+                             const IconComponent = category ? (ICON_MAP[category.icon] || ICON_MAP['ShoppingIcon']) : ICON_MAP['ShoppingIcon'];
                              return (
                                 <tr key={t.id} className="border-b border-gray-700 hover:bg-gray-700/50">
                                     <td className="p-4">{formatDate(t.date)}</td>
                                     <td className="p-4">{t.description}</td>
                                     <td className="p-4">
                                         <div className="flex items-center space-x-2">
-                                            {category?.icon}
+                                            <IconComponent />
                                             <span>{category?.name || 'Uncategorized'}</span>
                                         </div>
                                     </td>

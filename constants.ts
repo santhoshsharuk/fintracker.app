@@ -1,17 +1,30 @@
 import React from 'react';
 import { Transaction, Goal, Category, BudgetRule } from './types';
-import { GroceriesIcon, SalaryIcon, SavingsIcon, ShoppingIcon, TransportIcon, BillsIcon, TargetIcon, RestaurantIcon, GiftIcon } from './components/Icons';
+import * as Icons from './components/Icons';
+
+export const ICON_MAP: { [key: string]: React.FC<{className?: string}> } = {
+    SalaryIcon: Icons.SalaryIcon,
+    GroceriesIcon: Icons.GroceriesIcon,
+    TransportIcon: Icons.TransportIcon,
+    BillsIcon: Icons.BillsIcon,
+    ShoppingIcon: Icons.ShoppingIcon,
+    RestaurantIcon: Icons.RestaurantIcon,
+    SavingsIcon: Icons.SavingsIcon,
+    GiftIcon: Icons.GiftIcon,
+    TargetIcon: Icons.TargetIcon,
+};
+
 
 // FIX: Replaced JSX syntax with React.createElement as this is a .ts file, not a .tsx file, which was causing parsing errors.
 export const MOCK_CATEGORIES: Category[] = [
-    { id: 'cat1', name: 'Salary', icon: React.createElement(SalaryIcon), type: 'SAVINGS' }, // Technically income, but for categorization, let's put it here.
-    { id: 'cat2', name: 'Groceries', icon: React.createElement(GroceriesIcon), type: 'NEEDS' },
-    { id: 'cat3', name: 'Transport', icon: React.createElement(TransportIcon), type: 'NEEDS' },
-    { id: 'cat4', name: 'Bills', icon: React.createElement(BillsIcon), type: 'NEEDS' },
-    { id: 'cat5', name: 'Shopping', icon: React.createElement(ShoppingIcon), type: 'WANTS' },
-    { id: 'cat6', name: 'Dining Out', icon: React.createElement(RestaurantIcon), type: 'WANTS' },
-    { id: 'cat7', name: 'Savings', icon: React.createElement(SavingsIcon), type: 'SAVINGS' },
-    { id: 'cat8', name: 'Gift', icon: React.createElement(GiftIcon), type: 'WANTS' },
+    { id: 'cat1', name: 'Salary', icon: 'SalaryIcon', type: 'SAVINGS' },
+    { id: 'cat2', name: 'Groceries', icon: 'GroceriesIcon', type: 'NEEDS' },
+    { id: 'cat3', name: 'Transport', icon: 'TransportIcon', type: 'NEEDS' },
+    { id: 'cat4', name: 'Bills', icon: 'BillsIcon', type: 'NEEDS' },
+    { id: 'cat5', name: 'Shopping', icon: 'ShoppingIcon', type: 'WANTS' },
+    { id: 'cat6', name: 'Dining Out', icon: 'RestaurantIcon', type: 'WANTS' },
+    { id: 'cat7', name: 'Savings', icon: 'SavingsIcon', type: 'SAVINGS' },
+    { id: 'cat8', name: 'Gift', icon: 'GiftIcon', type: 'WANTS' },
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [];

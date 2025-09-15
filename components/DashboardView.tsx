@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Transaction, Goal, BudgetRule, Category, Settings } from '../types';
 import ProgressRing from './ProgressRing';
 import { PlusIcon } from './Icons';
+import { ICON_MAP } from '../constants';
 
 interface DashboardViewProps {
     transactions: Transaction[];
@@ -96,10 +97,11 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
                     <div className="space-y-4">
                         {recentTransactions.map(t => {
                             const category = categoryMap.get(t.categoryId);
+                            const IconComponent = category ? (ICON_MAP[category.icon] || ICON_MAP['ShoppingIcon']) : ICON_MAP['ShoppingIcon'];
                             return (
                                 <div key={t.id} className="flex justify-between items-center">
                                     <div className="flex items-center space-x-3">
-                                        <div className="bg-gray-700 p-2 rounded-full">{category?.icon}</div>
+                                        <div className="bg-gray-700 p-2 rounded-full"><IconComponent /></div>
                                         <div>
                                             <p className="font-semibold">{category?.name}</p>
                                             <p className="text-sm text-gray-400">{t.description}</p>

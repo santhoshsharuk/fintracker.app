@@ -13,12 +13,12 @@ export type BudgetCategoryType = 'NEEDS' | 'WANTS' | 'SAVINGS';
 export interface Category {
     id: string;
     name: string;
-    icon: React.ReactNode;
+    icon: string; // Changed from React.ReactNode to string
     type: BudgetCategoryType;
 }
 
 export interface Transaction {
-    id: string;
+    id:string;
     type: TransactionType;
     amount: number;
     categoryId: string;
