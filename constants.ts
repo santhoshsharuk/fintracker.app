@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, Goal, Category, BudgetRule } from './types';
+import { Transaction, Goal, Category, BudgetRule, Bill } from './types';
 import * as Icons from './components/Icons';
 
 export const ICON_MAP: { [key: string]: React.FC<{className?: string}> } = {
@@ -30,6 +30,8 @@ export const MOCK_CATEGORIES: Category[] = [
 export const MOCK_TRANSACTIONS: Transaction[] = [];
 
 export const MOCK_GOALS: Goal[] = [];
+
+export const MOCK_BILLS: Bill[] = [];
 
 export const MOCK_BUDGET_RULES: BudgetRule[] = [
     { name: '50/30/20 Rule', needs: 50, wants: 30, savings: 20 },

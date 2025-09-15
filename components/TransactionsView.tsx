@@ -79,7 +79,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ transactions, categ
 
     return (
         <div>
-            <h1 className="text-4xl font-bold mb-8">Transactions</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-8">Transactions</h1>
             <div className="bg-gray-800 p-4 rounded-lg mb-6">
                 <input
                     type="text"
@@ -89,8 +89,10 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ transactions, categ
                     className="w-full bg-gray-700 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
             </div>
-            <div className="bg-gray-800 rounded-lg overflow-hidden">
-                <table className="w-full text-left">
+            
+            {/* Desktop Table */}
+            <div className="hidden md:block bg-gray-800 rounded-lg overflow-x-auto">
+                <table className="w-full text-left min-w-[700px]">
                     <thead className="bg-gray-700">
                         <tr>
                             <th className="p-4 cursor-pointer" onClick={() => handleSort('date')}>Date <SortIndicator columnKey='date' /></th>
@@ -131,6 +133,49 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ transactions, categ
                     </tbody>
                 </table>
             </div>
+
+            {/* Mobile Card List */}
+            <div className="md:hidden space-y-4">
+                <div className="flex justify-around bg-gray-800 p-2 rounded-lg">
+                    <button onClick={() => handleSort('date')} className="font-semibold text-sm">Date<SortIndicator columnKey='date' /></button>
+                    <button onClick={() => handleSort('category')} className="font-semibold text-sm">Category<SortIndicator columnKey='category' /></button>
+                    <button onClick={() => handleSort('amount')} className="font-semibold text-sm">Amount<SortIndicator columnKey='amount' /></button>
+                </div>
+                {filteredAndSortedTransactions.map(t => {
+                    const category = categoryMap.get(t.categoryId);
+                    const IconComponent = category ? (ICON_MAP[category.icon] || ICON_MAP['ShoppingIcon']) : ICON_MAP['ShoppingIcon'];
+                    return (
+                        <div key={t.id} className="bg-gray-800 rounded-lg p-4">
+                            <div className="flex justify-between items-start">
+                                <div className="flex items-center space-x-3">
+                                    <div className="bg-gray-700 p-2 rounded-full">
+                                        <IconComponent className="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <p className="font-bold">{category?.name || 'Uncategorized'}</p>
+                                        <p className="text-sm text-gray-400">{t.description}</p>
+                                        <p className="text-xs text-gray-500 mt-1">{formatDate(t.date)}</p>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <p className={`font-bold text-lg ${t.type === 'INCOME' ? 'text-secondary' : 'text-accent-red'}`}>
+                                        {t.type === 'INCOME' ? '+' : '-'}{formatCurrency(t.amount)}
+                                    </p>
+                                    <div className="flex items-center justify-end mt-2">
+                                        <button onClick={() => onEditTransaction(t)} className="p-2 hover:bg-gray-600 rounded-full mr-1">
+                                            <EditIcon className="w-4 h-4" />
+                                        </button>
+                                        <button onClick={() => onDeleteTransaction(t.id)} className="p-2 hover:bg-gray-600 rounded-full">
+                                            <TrashIcon className="w-4 h-4 text-accent-red" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+
         </div>
     );
 };

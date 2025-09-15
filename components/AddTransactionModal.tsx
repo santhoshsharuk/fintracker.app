@@ -60,8 +60,8 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
 
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-gray-800 p-8 rounded-lg w-full max-w-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+            <div className="bg-gray-800 p-6 md:p-8 rounded-lg w-full max-w-lg">
                 <h2 className="text-2xl font-bold mb-6">{existingTransaction ? 'Edit' : 'Add'} Transaction</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="flex mb-4">
@@ -76,7 +76,7 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
 
                     <div className="mb-4">
                         <label className="block text-gray-400 mb-2">Category</label>
-                        <div className="grid grid-cols-4 gap-2">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                             {relevantCategories.map(cat => {
                                 const IconComponent = ICON_MAP[cat.icon] || ICON_MAP['ShoppingIcon'];
                                 return (
@@ -89,7 +89,7 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen, onClo
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label htmlFor="date" className="block text-gray-400 mb-2">Date</label>
                             <input type="date" id="date" value={date} onChange={e => setDate(e.target.value)} className="w-full bg-gray-700 p-3 rounded-lg" required />

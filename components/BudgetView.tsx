@@ -62,15 +62,15 @@ const BudgetView: React.FC<BudgetViewProps> = ({ transactions, budgetRule, setBu
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">Budget Management</h1>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <h1 className="text-3xl md:text-4xl font-bold">Budget Management</h1>
                 <select
                     value={budgetRule.name}
                     onChange={(e) => {
                         const newRule = MOCK_BUDGET_RULES.find(r => r.name === e.target.value);
                         if (newRule) setBudgetRule(newRule);
                     }}
-                    className="bg-gray-800 p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="bg-gray-800 p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-auto"
                 >
                     {MOCK_BUDGET_RULES.map(rule => <option key={rule.name} value={rule.name}>{rule.name}</option>)}
                 </select>

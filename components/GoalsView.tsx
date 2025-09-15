@@ -87,10 +87,10 @@ const GoalsView: React.FC<GoalsViewProps> = ({ goals, onAddGoal, transactions, s
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">Financial Goals</h1>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <h1 className="text-3xl md:text-4xl font-bold">Financial Goals</h1>
                 {!showAddForm && (
-                    <button onClick={() => setShowAddForm(true)} className="flex items-center space-x-2 bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-hover">
+                    <button onClick={() => setShowAddForm(true)} className="w-full md:w-auto flex items-center justify-center space-x-2 bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-hover">
                         <PlusIcon className="w-5 h-5" />
                         <span>Add Goal</span>
                     </button>

@@ -52,14 +52,14 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">Dashboard</h1>
-                <div className="flex space-x-4">
-                     <button onClick={onAddGoalClick} className="flex items-center space-x-2 bg-secondary text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <h1 className="text-3xl md:text-4xl font-bold">Dashboard</h1>
+                <div className="flex space-x-4 w-full md:w-auto">
+                     <button onClick={onAddGoalClick} className="flex-1 md:flex-initial flex items-center justify-center space-x-2 bg-secondary text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">
                         <PlusIcon className="w-5 h-5" />
                         <span>Set Goal</span>
                     </button>
-                    <button onClick={onAddTransactionClick} className="flex items-center space-x-2 bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-hover transition-colors">
+                    <button onClick={onAddTransactionClick} className="flex-1 md:flex-initial flex items-center justify-center space-x-2 bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-hover transition-colors">
                         <PlusIcon className="w-5 h-5" />
                         <span>Add Transaction</span>
                     </button>
@@ -69,7 +69,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-gray-800 p-6 rounded-lg col-span-1 md:col-span-3">
                     <p className="text-gray-400 text-lg">Current Balance</p>
-                    <p className="text-5xl font-bold text-white mt-2">{formatCurrency(balance)}</p>
+                    <p className="text-4xl lg:text-5xl font-bold text-white mt-2">{formatCurrency(balance)}</p>
                 </div>
             </div>
 
@@ -91,8 +91,8 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
                 </div>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                <div className="lg:col-span-2 bg-gray-800 p-6 rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div className="md:col-span-2 bg-gray-800 p-6 rounded-lg">
                     <h3 className="text-xl font-semibold mb-4">Recent Transactions</h3>
                     <div className="space-y-4">
                         {recentTransactions.map(t => {
@@ -116,7 +116,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ transactions, goals, bala
                     </div>
                 </div>
 
-                <div className="lg:col-span-3 bg-gray-800 p-6 rounded-lg">
+                <div className="md:col-span-3 bg-gray-800 p-6 rounded-lg">
                     <h3 className="text-xl font-semibold mb-4">Goal Progress</h3>
                     <div className="space-y-4">
                         {goals.slice(0, 3).map(goal => <GoalCard key={goal.id} goal={goal} settings={settings} />)}

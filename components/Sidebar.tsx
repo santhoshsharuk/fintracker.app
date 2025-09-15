@@ -1,13 +1,15 @@
 import React from 'react';
 import { View } from '../types';
-import { DashboardIcon, TransactionsIcon, BudgetIcon, TargetIcon, ReportsIcon, SettingsIcon } from './Icons';
+import { DashboardIcon, TransactionsIcon, BudgetIcon, TargetIcon, ReportsIcon, SettingsIcon, XIcon } from './Icons';
 
 interface SidebarProps {
     currentView: View;
     setView: (view: View) => void;
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, setIsOpen }) => {
     const navItems = [
         { view: View.DASHBOARD, label: 'Dashboard', icon: <DashboardIcon className="w-6 h-6" /> },
         { view: View.TRANSACTIONS, label: 'Transactions', icon: <TransactionsIcon className="w-6 h-6" /> },
@@ -17,14 +19,28 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
         { view: View.SETTINGS, label: 'Settings', icon: <SettingsIcon className="w-6 h-6" /> },
     ];
 
+    const handleNavigation = (view: View) => {
+        setView(view);
+        setIsOpen(false); // Close sidebar on navigation
+    };
+
     return (
-        <aside className="w-64 bg-gray-800 text-gray-200 p-4 flex flex-col">
-            <div className="text-2xl font-bold mb-10 text-center text-primary">FinTrack AI</div>
+        <aside className={`w-64 bg-gray-800 text-gray-200 p-4 flex flex-col fixed md:relative h-full z-20 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+            <div className="flex justify-between items-center mb-10">
+              <div className="text-2xl font-bold text-primary">FinTrack AI</div>
+              <button 
+                className="md:hidden p-1"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close menu"
+              >
+                  <XIcon className="w-6 h-6" />
+              </button>
+            </div>
             <nav className="flex flex-col space-y-2 flex-grow">
                 {navItems.map(item => (
                     <button
                         key={item.view}
-                        onClick={() => setView(item.view)}
+                        onClick={() => handleNavigation(item.view)}
                         className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 ${
                             currentView === item.view 
                             ? 'bg-primary text-white' 

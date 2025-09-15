@@ -60,7 +60,7 @@ const ReportsView: React.FC<ReportsViewProps> = ({ transactions, categories, set
 
     return (
         <div>
-            <h1 className="text-4xl font-bold mb-8">Reports & Analytics</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-8">Reports & Analytics</h1>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-gray-800 p-6 rounded-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Expense Breakdown</h2>

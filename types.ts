@@ -1,3 +1,5 @@
+// FIX: Removed self-import of AppState which caused a conflict.
+
 export enum View {
     DASHBOARD = 'DASHBOARD',
     TRANSACTIONS = 'TRANSACTIONS',
@@ -9,6 +11,27 @@ export enum View {
 
 export type TransactionType = 'INCOME' | 'EXPENSE';
 export type BudgetCategoryType = 'NEEDS' | 'WANTS' | 'SAVINGS';
+
+export enum NotificationType {
+    BILL_DUE = 'BILL_DUE',
+    BUDGET_EXCEEDED = 'BUDGET_EXCEEDED',
+    GOAL_MILESTONE = 'GOAL_MILESTONE',
+}
+
+export interface Notification {
+    id: string;
+    type: NotificationType;
+    message: string;
+    timestamp: string; // ISO string
+    isRead: boolean;
+}
+
+export interface Bill {
+    id: string;
+    name: string;
+    amount: number;
+    dayOfMonth: number; // 1-31
+}
 
 export interface Category {
     id: string;
@@ -44,4 +67,14 @@ export interface BudgetRule {
 export interface Settings {
     currency: string;
     language: string;
+}
+
+export interface AppState {
+    transactions: Transaction[];
+    goals: Goal[];
+    categories: Category[];
+    budgetRule: BudgetRule;
+    settings: Settings;
+    notifications: Notification[];
+    bills: Bill[];
 }
