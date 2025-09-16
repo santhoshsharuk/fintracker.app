@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      base:"/fintracker.app",
+      build: {
+    chunkSizeWarningLimit: 1000, // increase from 500kb → 1MB
+  },
     };
 });
