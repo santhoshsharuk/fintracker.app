@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../types';
-import { DashboardIcon, TransactionsIcon, BudgetIcon, TargetIcon, ReportsIcon, SettingsIcon, XIcon } from './Icons';
+import { DashboardIcon, TransactionsIcon, BudgetIcon, TargetIcon, ReportsIcon, SettingsIcon, XIcon, ExternalLinkIcon } from './Icons';
 
 interface SidebarProps {
     currentView: View;
@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, setIsOp
     return (
         <aside className={`w-64 bg-gray-800 text-gray-200 p-4 flex flex-col fixed md:relative h-full z-20 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
             <div className="flex justify-between items-center mb-10">
-              <div className="text-2xl font-bold text-primary">FinTrack AI</div>
+              <div className="text-2xl font-bold text-primary">FinTrack</div>
               <button 
                 className="md:hidden p-1"
                 onClick={() => setIsOpen(false)}
@@ -52,6 +52,17 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, setIsOp
                     </button>
                 ))}
             </nav>
+             <div className="mt-auto">
+                <a
+                    href="https://santhoshsharuk.me"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-gray-700"
+                >
+                    <ExternalLinkIcon className="w-6 h-6" />
+                    <span className="font-semibold">More apps</span>
+                </a>
+            </div>
         </aside>
     );
 };

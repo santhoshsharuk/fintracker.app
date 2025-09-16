@@ -8,6 +8,7 @@ import ReportsView from './components/ReportsView';
 import SettingsView from './components/SettingsView';
 import AddTransactionModal from './components/AddTransactionModal';
 import NotificationCenter from './components/NotificationCenter';
+import SplashScreen from './components/SplashScreen'; // Import SplashScreen
 import { MenuIcon } from './components/Icons';
 
 import { View, Transaction, Goal, BudgetRule, Category, Settings, AppState, Notification, Bill, NotificationType } from './types';
@@ -59,6 +60,7 @@ const loadState = (): AppState => {
 
 
 const App: React.FC = () => {
+    const [isLoading, setIsLoading] = useState(true); // State for splash screen
     const initialState = loadState();
     const [view, setView] = useState<View>(View.DASHBOARD);
     const [transactions, setTransactions] = useState<Transaction[]>(initialState.transactions);
@@ -75,8 +77,17 @@ const App: React.FC = () => {
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c])), [categories]);
 
+    // Effect to hide splash screen
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2500); // Show splash for 2.5 seconds
+        return () => clearTimeout(timer);
+    }, []);
+
     // Effect to save state to localStorage whenever it changes
     useEffect(() => {
+        if (isLoading) return; // Don't save initial default state during loading
         try {
             const stateToSave: AppState = {
                 transactions,
@@ -92,10 +103,11 @@ const App: React.FC = () => {
         } catch (error) {
             console.error("Error saving state to localStorage", error);
         }
-    }, [transactions, goals, categories, budgetRule, settings, notifications, bills]);
+    }, [transactions, goals, categories, budgetRule, settings, notifications, bills, isLoading]);
 
     // Notification Generation Logic
     useEffect(() => {
+        if (isLoading) return;
         const newNotifications: Notification[] = [];
         const now = new Date();
         const currentMonthYear = `${now.getFullYear()}-${now.getMonth()}`;
@@ -192,10 +204,11 @@ const App: React.FC = () => {
             setNotifications(prev => [...newNotifications, ...prev].sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()));
         }
 
-    }, [transactions, goals, bills, budgetRule, categories, categoryMap]);
+    }, [transactions, goals, bills, budgetRule, categories, categoryMap, isLoading]);
 
     // Update goal progress when transactions change
      useEffect(() => {
+        if (isLoading) return;
         const totalSavings = transactions
             .filter(t => categoryMap.get(t.categoryId)?.type === 'SAVINGS' && t.type === 'EXPENSE')
             .reduce((sum, t) => sum + t.amount, 0);
@@ -207,7 +220,7 @@ const App: React.FC = () => {
                 currentAmount: Math.min(savingsPerGoal, goal.targetAmount) // Simplified update
             })));
         }
-    }, [transactions, categoryMap, goals.length]);
+    }, [transactions, categoryMap, goals.length, isLoading]);
 
     const balance = useMemo(() => {
         return transactions.reduce((acc, t) => {
@@ -216,8 +229,16 @@ const App: React.FC = () => {
     }, [transactions]);
     
     const totalIncome = useMemo(() => {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
         return transactions
-            .filter(t => t.type === 'INCOME')
+            .filter(t => {
+                const transactionDate = new Date(t.date);
+                return t.type === 'INCOME' &&
+                       transactionDate.getFullYear() === currentYear &&
+                       transactionDate.getMonth() === currentMonth;
+            })
             .reduce((sum, t) => sum + t.amount, 0);
     }, [transactions]);
 
@@ -361,6 +382,10 @@ const App: React.FC = () => {
                         />;
         }
     };
+
+    if (isLoading) {
+        return <SplashScreen />;
+    }
 
     return (
         <div className="flex h-screen bg-gray-900 text-gray-100 font-sans">
